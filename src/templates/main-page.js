@@ -46,14 +46,6 @@ export const MainPageTemplate = ({
   )
 }
 
-MainPageTemplate.propTypes = {
-  content: PropTypes.node.isRequired,
-  contentComponent: PropTypes.func,
-  description: PropTypes.string,
-  title: PropTypes.string,
-  helmet: PropTypes.object,
-}
-
 const MainPage = ({ data }) => {
   const { markdownRemark: post } = data
 
@@ -79,24 +71,37 @@ const MainPage = ({ data }) => {
   )
 }
 
-MainPage.propTypes = {
-  data: PropTypes.shape({
-    markdownRemark: PropTypes.object,
-  }),
-}
-
 export default MainPage
 
 export const pageQuery = graphql`
   query MainPageByID($id: String!) {
     markdownRemark(id: { eq: $id }) {
-      id
-      html
       frontmatter {
-        date(formatString: "MMMM DD, YYYY")
         title
+        image {
+          childImageSharp {
+            fluid(maxWidth: 3048, quality: 100) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+        heading
+        subheading
         description
-        tags
+        intro {
+          blurbs {
+            image {
+              childImageSharp {
+                fluid(maxWidth: 240, quality: 64) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+            text
+          }
+          heading
+          description
+        }
       }
     }
   }
