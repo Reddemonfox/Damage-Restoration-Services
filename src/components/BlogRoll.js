@@ -8,7 +8,7 @@ class BlogRoll extends React.Component {
     const { data } = this.props
     const { edges: posts } = data.allMarkdownRemark
 
-    return (
+     return (
       <div className="columns is-multiline">
         {posts &&
           posts.map(({ node: post }) => (
@@ -46,7 +46,7 @@ class BlogRoll extends React.Component {
                   {post.excerpt}
                   <br />
                   <br />
-                  <Link className="button" to={post.fields.slug}>
+                  <Link className="button" to={post.fields.slug.split("/blog/").join("")}>
                     Keep Reading →
                   </Link>
                 </p>
